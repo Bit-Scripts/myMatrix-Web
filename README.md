@@ -27,6 +27,9 @@ Le code utilise deux éléments `<canvas>` pour dessiner les caractères. Le pre
 
 Le JavaScript gère la création et l'animation des caractères tombant. Il commence par initialiser les caractères, puis les anime pour qu'ils tombent à des vitesses aléatoires.
 
-## Auteur
-
-Paul WOISARD
+## Auteurs
+  
+Librement inspiré du travail de Riaz LASKAR [voir ici](https://codepen.io/riazxrazor/pen/Gjomdp)  
+  
+Paul WOISARD  
+  
