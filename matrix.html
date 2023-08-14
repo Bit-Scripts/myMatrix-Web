@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+        @font-face {
+            font-family: 'Matrix'; /* Nom de la police personnalisée */
+            src: url('mtx.ttf') format('truetype'); /* Chemin vers le fichier de police */
+            /* Autres propriétés de la police si nécessaire, comme font-weight, font-style, etc. */
+        }
+        body {
+            margin: 0;
+            font-family: 'Matrix';
+            overflow: hidden; /* Masquer tout ce qui dépasse de la fenêtre */
+        }
+        canvas {
+            display: block;
+            position:absolute;
+            top:0;
+            left:0;
+            width: 100vw;
+            height: 100vh;
+        }
+    </style>
+  </head>
+  <body>
+    <canvas id="canvas">Canvas is not supported in your browser.</canvas>
+    <canvas id="canvas2">Canvas is not supported in your browser.</canvas>
+    <script>
+        var canvas = document.getElementById( 'canvas' ),
+                ctx = canvas.getContext( '2d' ),
+            canvas2 = document.getElementById( 'canvas2' ),
+            ctx2 = canvas2.getContext( '2d' ),
+                // full screen dimensions
+                cw = window.innerWidth,
+                ch = window.innerHeight,
+            charArr = [
+                " ","ú","ù","_",".","-",",","`",";",":","+","/","'","=","a","~","^","x","v","s","*",">","<","n","ø","÷","\"","Ö","È","Ê","e","|","Ä","r","Ã","±","i","É","z","m",")","(","¹","l","¡","»","·","ã","I","}","{","]","[","ý","Ù","Ð","§","1","j","Ô","Í","¾","Â","æ","t","L","!","Ì","Á","À","º","¸","´","Ë","y","?","Ò","þ","¶","q","g","¨","p","2","Ñ","Ï","¼","²","T","f","C","J","ä","Ý","7","Ó","ü","×","©","3","Y","Ø","Î","°","Õ","½","«","5","Z","ó","õ","¿","Ç","£","ô","í","S","Æ","µ","6","¬","¢","k","d","û","b","î","à","ª","F","4","ò","X","h","Ú","¯","9","ê","P","$","#","G","á","ß","E","Û","A","¤","V","ð","ï","U","&","é","O","Þ","å","K","D","®","8","â","H","Ü","ì","R","B","ë","Q","W","¦","0","@","ñ","M","è","N","ç","¥"
+            ],
+            maxCharCount = 100,
+            fallingCharArr = [],
+            fontSize = 15,
+            maxColums = cw / (fontSize);
+            canvas.width = canvas2.width = cw;
+            canvas.height = canvas2.height = ch;
+            var isFirstWave = true;
+
+
+            function randomInt(min, max) {
+                return Math.floor(Math.random() * (max - min) + min);
+            }
+
+            function randomFloat(min, max) {
+                return Math.random() * (max - min) + min;
+            }
+
+            function Point(x, y, speed) {
+                this.x = x;
+                this.y = y;
+                this.speed = speed;
+            }
+
+            Point.prototype.draw = function(ctx) {
+                this.value = charArr[randomInt(0, charArr.length - 1)].toUpperCase();
+
+                ctx2.fillStyle = "rgba(255,255,255,0.8)";
+                ctx2.font = fontSize + "px Matrix";
+                ctx2.fillText(this.value, this.x, this.y);
+
+                ctx.fillStyle = "#0F0";
+                ctx.font = fontSize + "px Matrix";
+                ctx.fillText(this.value, this.x, this.y);
+
+                this.y += this.speed;
+                if (this.y > ch) {
+                    if (isFirstWave) {
+                        isFirstWave = false;
+                    }
+
+                    this.y = isFirstWave ? -250 : randomFloat(-100, 0);
+                    this.speed = isFirstWave ? fontSize : randomFloat(fontSize * 0.5, fontSize * 2);
+                }
+            }
+
+            for (var i = 0; i < maxColums; i++) {
+                var startX = i * fontSize;
+                var startY = isFirstWave ? -250 : randomFloat(-500, 0);
+                var speed = isFirstWave ? fontSize : randomFloat(fontSize * 0.5, fontSize * 2);
+
+                fallingCharArr.push(new Point(startX, startY, speed));
+            }
+
+            var update = function() {
+                ctx.fillStyle = "rgba(0,0,0,0.05)";
+                ctx.fillRect(0, 0, cw, ch);
+
+                ctx2.clearRect(0, 0, cw, ch);
+
+                var i = fallingCharArr.length;
+
+                while (i--) {
+                    fallingCharArr[i].draw(ctx);
+                    var v = fallingCharArr[i];
+                }
+
+                requestAnimationFrame(update);
+            }
+
+        update();
+    </script>
+  </body>
+</html>
