@@ -19,7 +19,7 @@ Assurez-vous d'avoir le fichier de police `mtx.ttf` dans le même dossier que vo
 
 ## Comment l'utiliser ?
 
-Il vous suffit d'ouvrir le fichier HTML dans un navigateur moderne pour voir l'effet de pluie Matrix en action. [En voici un exemple en ligne.](https://bit-scripts.github.io/myMatrix-Web/matrix.html)
+Il vous suffit d'ouvrir le fichier HTML dans un navigateur moderne pour voir l'effet de pluie Matrix en action. [En voici un exemple en ligne.](https://bit-scripts.github.io/myMatrix-Web/)
 
 ## Explication du code
 
